@@ -50,5 +50,5 @@ For example:
 
 ## Notes
 
-*   The program assumes that the `todo.txt` file exists in the same directory as the executable.
+*   The program assumes that the `todo.txt` file exists in the same directory as the executable. If `todo.txt` does not exist, it will be created upon running the program.
 *   The date format is `YYYY-MM-DD`.
