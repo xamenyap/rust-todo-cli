@@ -54,13 +54,17 @@ fn main() {
 
                 todo_items.sort();
 
-                println!("----------------------------------");
-                println!("| Date       | Task                |");
-                println!("----------------------------------");
-                for item in todo_items {
-                    println!("| {} | {} |", item.date.format("%Y-%m-%d"), item.task);
+                if todo_items.is_empty() {
+                    println!("There is no items in your todo list");
+                } else {
+                    println!("----------------------------------");
+                    println!("| Date       | Task                |");
+                    println!("----------------------------------");
+                    for item in todo_items {
+                        println!("| {} | {} |", item.date.format("%Y-%m-%d"), item.task);
+                    }
+                    println!("----------------------------------");
                 }
-                println!("----------------------------------");
             }
             "2" => {
                 print!("Enter new todo item: ");
