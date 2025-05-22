@@ -20,27 +20,54 @@ impl PartialOrd for TodoItem {
     }
 }
 
+use std::io;
+use std::io::Write;
+
 fn main() {
-    let todo_file_path = "src/todo.txt";
-    let contents = fs::read_to_string(todo_file_path).expect("Unable to read file");
+    loop {
+        println!("----------------------------------");
+        println!("1: Display Todo Items");
+        println!("2: Exit");
+        println!("----------------------------------");
 
-    let mut todo_items: Vec<TodoItem> = contents
-        .lines()
-        .map(|line| {
-            let parts: Vec<&str> = line.splitn(2, "  ").collect();
-            let date = NaiveDate::parse_from_str(parts[0], "%Y-%m-%d").expect("Invalid date format");
-            let task = parts[1].trim().to_string();
-            TodoItem { date, task }
-        })
-        .collect();
+        print!("Enter your choice: ");
+        io::stdout().flush().unwrap();
 
-    todo_items.sort();
+        let mut choice = String::new();
+        io::stdin().read_line(&mut choice).expect("Failed to read line");
 
-    println!("----------------------------------");
-    println!("| Date       | Task                |");
-    println!("----------------------------------");
-    for item in todo_items {
-        println!("| {} | {} |", item.date.format("%Y-%m-%d"), item.task);
+        match choice.trim() {
+            "1" => {
+                let todo_file_path = "src/todo.txt";
+                let contents = fs::read_to_string(todo_file_path).expect("Unable to read file");
+
+                let mut todo_items: Vec<TodoItem> = contents
+                    .lines()
+                    .map(|line| {
+                        let parts: Vec<&str> = line.splitn(2, "  ").collect();
+                        let date = NaiveDate::parse_from_str(parts[0], "%Y-%m-%d").expect("Invalid date format");
+                        let task = parts[1].trim().to_string();
+                        TodoItem { date, task }
+                    })
+                    .collect();
+
+                todo_items.sort();
+
+                println!("----------------------------------");
+                println!("| Date       | Task                |");
+                println!("----------------------------------");
+                for item in todo_items {
+                    println!("| {} | {} |", item.date.format("%Y-%m-%d"), item.task);
+                }
+                println!("----------------------------------");
+            }
+            "2" => {
+                println!("Exiting program.");
+                break;
+            }
+            _ => {
+                println!("Invalid input. Please enter 1 or 2.");
+            }
+        }
     }
-    println!("----------------------------------");
 }
