@@ -38,7 +38,7 @@ fn main() {
 
         match choice.trim() {
             "1" => {
-                let todo_file_path = "src/todo.txt";
+                let todo_file_path = "todo.txt";
                 let contents = fs::read_to_string(todo_file_path).expect("Unable to read file");
 
                 let mut todo_items: Vec<TodoItem> = contents
