@@ -76,6 +76,11 @@ fn add_todo_item() {
 }
 
 fn main() {
+    let todo_file_path = "todo.txt";
+    if !std::path::Path::new(todo_file_path).exists() {
+        fs::File::create(todo_file_path).expect("Failed to create todo.txt");
+    }
+
     loop {
         println!("----------------------------------");
         println!("1: Display Todo Items");
